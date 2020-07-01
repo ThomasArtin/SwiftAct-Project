@@ -27,24 +27,39 @@
 #include "Typdefs.h"
 #include "DIO.h"
 #include "ADC.h"
+#include "Temp.h"
 
 void main()
 {
     DIO_SetPortDirection(DIOPORTD,0x00);
+    DIO_SetPortDirection(DIOPORTC,0x00);
     DIO_PullUpPORTB();
     ADC_Init();
     volatile sint_16 adcvalue;
+    uint_1 toggle = 0;
     while(1)
     {   
-        /*Read from POT2*/
-        adcvalue = ADC_READ(1);
+        
         if (PORTBbits.RB1 == LOW)
-        {
+        {       
+            if(toggle == 1)
+            {
+                Temp_TurnOnCooler();
+                Temp_TurnOffHeater();
+                toggle = 0;
+            }
+            else
+            {
+                Temp_TurnOffCooler();
+                Temp_TurnOnHeater();
+                toggle = 1;
+            }
                 DIO_SetPortData(DIOPORTD,0x0F);
         }
         else
         {
                 DIO_SetPortData(DIOPORTD,0xF0);
         }
+        adcvalue = Temp_ReadTemp();
     } 
 } 
