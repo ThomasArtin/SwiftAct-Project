@@ -31,15 +31,17 @@
 
 void main()
 {
-    DIO_SetPortDirection(DIOPORTD,0x00);
-    DIO_SetPortDirection(DIOPORTC,0x00);
+    DIO_SetPortDirection(DIOPORTD,AllOUTPUT);
+    DIO_SetPortDirection(DIOPORTC,AllOUTPUT);
+    DIO_SetPortDirection(DIOPORTA,AllOUTPUT);
+    PORTAbits.RA3 = HIGH;
     DIO_PullUpPORTB();
     ADC_Init();
     volatile sint_16 adcvalue;
     uint_1 toggle = 0;
+    DIO_SetPinValue(D1,HIGH);
     while(1)
     {   
-        
         if (PORTBbits.RB1 == LOW)
         {       
             if(toggle == 1)
@@ -54,11 +56,11 @@ void main()
                 Temp_TurnOnHeater();
                 toggle = 1;
             }
-                DIO_SetPortData(DIOPORTD,0x0F);
+                
         }
         else
         {
-                DIO_SetPortData(DIOPORTD,0xF0);
+                
         }
         adcvalue = Temp_ReadTemp();
     } 

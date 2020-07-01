@@ -14,21 +14,21 @@ sint_16 Temp_ReadTemp(void)
 /*Turn on the cooling element*/
 void Temp_TurnOnCooler(void)
 {
-    PORTCbits.RC2 = HIGH;
+    DIO_SetPinValue(TempCoolingElement,HIGH);
 }
 /*Tun off the cooling element*/
 void Temp_TurnOffCooler(void)
 {
-    PORTCbits.RC2 = LOW;
+    DIO_SetPinValue(TempCoolingElement,LOW);
 }
 /*Tun on the heating element*/
 void Temp_TurnOnHeater (void)
 {
-    PORTCbits.RC5 = HIGH;
+    DIO_SetPinValue(TempHeatingElement,HIGH);
 
 }
 /*Turn off the heating element*/
 void Temp_TurnOffHeater  (void)
 {
-    PORTCbits.RC5 = LOW;
+    DIO_SetPinValue(TempHeatingElement,LOW);
 }

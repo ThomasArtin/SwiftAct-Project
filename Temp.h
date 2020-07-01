@@ -7,8 +7,13 @@
 
 #ifndef TEMP_H
 #define	TEMP_H
+/*Configure the ADC temp sensor channel,
+ *And the cooling element pin and heating
+ element pin                            */
+#define TempSensorChannel   2
+#define TempCoolingElement  C2
+#define TempHeatingElement  C5
 
-#define TempSensorChannel 2
 extern sint_16 Temp_ReadTemp    (void);
 extern void Temp_TurnOnCooler   (void);
 extern void Temp_TurnOffCooler  (void);
