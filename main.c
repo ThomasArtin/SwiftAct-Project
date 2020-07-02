@@ -28,20 +28,18 @@
 #include "DIO.h"
 #include "ADC.h"
 #include "Temp.h"
+#include "Seg.h"
 
 void main()
 {
-    DIO_SetPortDirection(DIOPORTD,AllOUTPUT);
-    DIO_SetPortDirection(DIOPORTC,AllOUTPUT);
-    DIO_SetPortDirection(DIOPORTA,AllOUTPUT);
-    PORTAbits.RA3 = HIGH;
+    Temp_Init();
+    Seg_Init();
     DIO_PullUpPORTB();
     ADC_Init();
-    volatile sint_16 adcvalue;
     uint_1 toggle = 0;
-    DIO_SetPinValue(D1,HIGH);
     while(1)
     {   
+        Seg_Disp2Dig(Temp_ReadTemp());
         if (PORTBbits.RB1 == LOW)
         {       
             if(toggle == 1)
@@ -62,6 +60,6 @@ void main()
         {
                 
         }
-        adcvalue = Temp_ReadTemp();
+        
     } 
 } 

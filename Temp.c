@@ -6,10 +6,16 @@
 #include "ADC.h"
 #include "Temp.h"
 
-/*Read temp sensor from the ADC channel*/
-sint_16 Temp_ReadTemp(void)
+/*Set Appropriate pins values*/
+void Temp_Init(void)
 {
-    return ADC_READ(TempSensorChannel);
+    DIO_SetPinDirection(C2,OUTPUT);
+    DIO_SetPinDirection(C5,OUTPUT);
+}
+/*Read temp sensor from the ADC channel*/
+uint_16 Temp_ReadTemp(void)
+{
+    return ADC_READ(TempSensorChannel)*0.488;
 }
 /*Turn on the cooling element*/
 void Temp_TurnOnCooler(void)

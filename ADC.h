@@ -10,8 +10,8 @@
 
 #define _XTAL_FREQ 20000000 
 
-extern void ADC_Init(void);
-extern sint_16 ADC_READ(uint_8 ADCChannel);
+extern void ADC_Init        (void);
+extern uint_16 ADC_READ     (uint_8 ADCChannel);
 
 
 #endif	/* ADC_H */

@@ -15,7 +15,7 @@ void ADC_Init(void)
     ADCON1bits.ADFM = 1;
 }
 /*Get a one-shot read of the ADC channel selected*/
-sint_16 ADC_READ(uint_8 ADCChannel)
+uint_16 ADC_READ(uint_8 ADCChannel)
 {
     /*Turn on ADC module*/
     ADCON0bits.ADON = 1;
