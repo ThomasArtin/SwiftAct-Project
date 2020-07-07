@@ -71,7 +71,6 @@ enum DIO_PINS
 extern void DIO_SetPortDirection    (uint_8 Port,uint_8 Direction);
 extern void DIO_SetPortData         (uint_8 Port,uint_8 Data);
 extern uint_8 DIO_GetPortData       (uint_8 Port,uint_8 Data);
-extern void DIO_PullUpPORTB         (void);
 extern void DIO_SetPinDirection     (uint_8 Pin, uint_8 Direction);
 extern void DIO_SetPinValue         (uint_8 Pin,uint_8 Value);
 extern uint_8 DIO_GetPinValue       (uint_8 Pin);

@@ -18,5 +18,6 @@ typedef unsigned short int sint_16;
 typedef signed long int sint_64;
 typedef float f_32;
 typedef double f_64;
+#define NULL 0
 #endif	/* TYPDEFS_H */
 

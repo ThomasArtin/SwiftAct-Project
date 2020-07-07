@@ -171,9 +171,3 @@ uint_8 DIO_GetPinValue(uint_8 Pin)
         return Get_Bit(PORTE,Pin);
     }
 }
-/*Sets PORTB to be output and pull all the pins to a weak pull-up*/
-void DIO_PullUpPORTB(void)
-{
-    DIO_SetPortDirection(DIOPORTB,0xFF);
-    OPTION_REGbits.nRBPU = 0;
-}

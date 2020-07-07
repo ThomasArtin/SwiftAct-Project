@@ -14,12 +14,16 @@
 #define I2c_SDA C4
 #define I2c_SCK C3
 
-extern void I2c_Init        (uint_32 freq);
-extern void I2c_wait        (void);
-extern void I2c_Begin       (void);
-extern void I2c_End         (void);
-extern void I2c_WB          (uint_8 data);
-extern uint_8 I2c_RB        (void);
+extern void I2c_Init            (uint_32 freq);
+extern void I2c_wait            (void);
+extern void I2c_Begin           (void);
+extern void I2c_End             (void);
+extern void I2c_WB              (uint_8 data);
+extern uint_8 I2c_RB            (void);
+extern void I2c_Ack             (void);
+extern void I2c_NAck            (void);
+extern void I2c_WaitAck         (void);
+extern void I2c_RepeatedStart   (void);
 
 
 #endif	/* I2C_H */
