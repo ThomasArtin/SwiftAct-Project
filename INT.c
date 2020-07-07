@@ -15,7 +15,12 @@ callback PORTBINTCON_INTHANDLER = NULL;
 #if (INT_TIMER0 == ON)
 callback TIMER0_INTHANDLER = NULL;
 #endif
-
+#if (INT_TIMER1 == ON)
+callback TIMER1_INTHANDLER  = NULL;
+#endif
+#if (INT_TIMER2 == ON)
+callback TIMER2_INTHANDLER  = NULL;
+#endif
 /*Initializes interrupt registers
  *you can configure what gets initialized
  in INT.h                               */
@@ -44,6 +49,32 @@ void INT_int (void)
     /*timer preload value*/
     TMR0 = TIMER0_Preload;
 #endif
+#if (INT_TIMER1 == ON)
+    /*set prescalar to 8*/
+    T1CON |= 0b00110000;
+    /*enable timer1 interrupt*/
+    PIE1bits.TMR1IE = 1;
+    /*turn off oscillator */
+    T1CONbits.T1OSCEN = 0;
+    /*turn off ext clock synchro*/
+    T1CONbits.T1SYNC = 0;
+    /*select clock input to be internal*/
+    T1CONbits.TMR1CS = 0;
+    /*turn timer on*/
+    T1CONbits.TMR1ON = 1;
+    /*enter preload values*/
+    TMR1H = TIMER1_Preload >> 8;
+    TMR1L = TIMER1_Preload << 8;
+#endif
+#if (INT_TIMER2 == ON)
+    /*timer2 int enable*/
+    PIE1bits.TMR2IE = 1;
+    /*set prescalar and postscalar both to 16*/
+    T2CON |= 0b01111011;
+    /*turn timer 2 on*/
+    T2CONbits.TMR2ON = 1;
+    TMR2 = TIMER2_Preload;
+#endif
     /*enable global int*/
     INTCONbits.GIE = 1;
     /*enables peripheral int*/
@@ -63,13 +94,25 @@ void INT_PORTBINTCON_IntCallBack (callback PORTBINTCON_INTHandlerPtr)
     PORTBINTCON_INTHANDLER = PORTBINTCON_INTHandlerPtr;
 }
 #endif
-/*Sets PORTB to be output and pull all the pins to a weak pull-up*/
 #if (INT_TIMER0 == ON)
     void INT_TIMER0_IntCallBack (callback TIMER0_INTHandlerPtr)
     {
         TIMER0_INTHANDLER = TIMER0_INTHandlerPtr;
     }
 #endif
+#if (INT_TIMER1 == ON)
+    void INT_TIMER1_IntCallBack (callback TIMER1_INTHandlerPtr)
+    {
+        TIMER1_INTHANDLER = TIMER1_INTHandlerPtr;
+    }
+#endif
+#if (INT_TIMER2 == ON)
+    void INT_TIMER2_IntCallBack (callback TIMER2_INTHandlerPtr)
+    {
+        TIMER2_INTHANDLER = TIMER2_INTHandlerPtr;
+    }
+#endif
+/*Sets PORTB to be output and pull all the pins to a weak pull-up*/
 void INT_PullUpPORTB(void)
 {
     DIO_SetPortDirection(DIOPORTB,0xFF);
@@ -94,12 +137,24 @@ void __interrupt() ISR(void)
     }
 #endif
 #if (INT_TIMER0 == ON)
+    if (INTCONbits.T0IF == 1)
     {
-        if (INTCONbits.T0IF == 1)
-        {
-            (*TIMER0_INTHANDLER)();
-            INTCONbits.T0IF = 0;
-        }
+        (*TIMER0_INTHANDLER)();
+        INTCONbits.T0IF = 0;
+    }
+#endif
+#if (INT_TIMER1 == ON)
+    if (PIR1bits.TMR1IF == 1)
+    {
+        (*TIMER1_INTHANDLER)();
+        PIR1bits.TMR1IF = 0;
+    }
+#endif
+#if (INT_TIMER2 == ON)
+    if (PIR1bits.TMR2IF == 1)
+    {
+        (*TIMER2_INTHANDLER)();
+        PIR1bits.TMR2IF = 0;
     }
 #endif
 }

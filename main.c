@@ -40,7 +40,9 @@ void main()
     Temp_Init();
     Seg_Init();
     ADC_Init();
-    INT_TIMER0_IntCallBack(TIMER0_INT);
+    INT_TIMER0_IntCallBack (TIMER0_ReadAdc100ms);
+    INT_TIMER1_IntCallBack (TIMER1_1s);
+    INT_TIMER2_IntCallBack (TIMER2_100ms);
     INT_RB0_IntCallBack(RBO_INT_Cooler);
     INT_int();
     //I2c_Init(1000000);
