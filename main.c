@@ -33,48 +33,22 @@
 #include "I2c.h"
 #include "INT.h"
 #include "INTHandlers.h"
+#include "heater.h"
+volatile uint_16 bug_1 = 0;
+volatile Flag_16 Flags;
 
-volatile uint_8 bug_1 = 0;
 void main()
-{
+{   
     Temp_Init();
     Seg_Init();
     ADC_Init();
+    INT_RB0_IntCallBack(RBO_INT_WakeUp);
     INT_TIMER0_IntCallBack (TIMER0_ReadAdc100ms);
     INT_TIMER1_IntCallBack (TIMER1_1s);
     INT_TIMER2_IntCallBack (TIMER2_100ms);
-    INT_RB0_IntCallBack(RBO_INT_Cooler);
     INT_int();
-    //I2c_Init(1000000);
-    uint_1 toggle = 0;
-   /* EEPROM_WB(0x00,0x03);
-    uint_8 read_byte;
-    __delay_ms(1000);
-    read_byte = EEPROM_RB(0x00);*/
     while(1)
-    {   
-        //Seg_Disp2Dig(Temp_ReadTemp());
-        //Seg_Disp2Dig(read_byte);
-       /* if (PORTBbits.RB1 == LOW)
-        {       
-            if(toggle == 1)
-            {
-                Temp_TurnOnCooler();
-                Temp_TurnOffHeater();
-                toggle = 0;
-            }
-            else
-            {
-                Temp_TurnOffCooler();
-                Temp_TurnOnHeater();
-                toggle = 1;
-            }
-                
-        }
-        else
-        {
-                
-        }
-        */
+    {   bug_1 = Flags.Flag;
+        Heater_Main();
     } 
 } 

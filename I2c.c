@@ -4,11 +4,13 @@
 #include "DIO.h"
 #include "I2c.h"
 
+volatile uint_32 bug_0 = 0;
 /*Initializes SDA and SCK pins direction and sets the appropriate bits in the
  *in the control registers as master                                                */
 void I2c_Init (uint_32 freq)
-{
-    SSPADD = (_XTAL_FREQ/(4*freq))-1;
+{   
+    bug_0 = freq;
+    SSPADD = 49;
     DIO_SetPinDirection(I2c_SDA,INPUT);
     DIO_SetPinDirection(I2c_SCK,INPUT);
     SSPCON  = 0b00101000;

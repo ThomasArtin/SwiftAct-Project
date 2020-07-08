@@ -78,3 +78,10 @@ extern void Seg_Disp2Dig (uint_16 DispValue)
     Seg_DispNumber(Seg_Disp4,(DispValue%100)%10,Seg_NoDot);
     __delay_ms(1);
 }
+
+extern void Seg_DispOff(void)
+{
+    DIO_SetPinValue(Seg_Disp2,LOW);
+    DIO_SetPinValue(Seg_Disp3,LOW);
+    DIO_SetPinValue(Seg_Disp4,LOW);
+}

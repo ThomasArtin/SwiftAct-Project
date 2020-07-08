@@ -29,8 +29,9 @@
 #define Seg_Disp4 A5
 #define Seg_Port  DIOPORTD
 
-extern void Seg_Disp2Dig   (uint_16 DispValue);
+extern void Seg_Disp2Dig    (uint_16 DispValue);
 extern void Seg_DispNumber  (uint_8 Display,uint_8 Number, uint_8 Dot);
 extern void Seg_Init        (void);
+extern void Seg_DispOff     (void);
 #endif	/* SEG_H */
 

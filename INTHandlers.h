@@ -12,23 +12,12 @@
 #include "Typdefs.h"
 
 
-#if (INT_TIMER0 == ON)
-#define TIMER0_OverFlowCounts       (((INT_TIMER0_Freq*2)/(26)))
-#define TIMER0_Preload              (256 * (((INT_TIMER0_Freq*200)/(26))%100)/100)
-#endif
-#if (INT_TIMER1 == ON)
-#define TIMER1_OverFlowCounts       (((INT_TIMER2_Freq*2)/(209)))
-#define TIMER1_Preload              (65536 * (((INT_TIMER2_Freq*2)/(209))%100)/100)
-#endif
-#if (INT_TIMER2 == ON)
-#define TIMER2_OverFlowCounts       (((INT_TIMER2_Freq*2)/(26)))
-#define TIMER2_Preload              (256 * (((INT_TIMER2_Freq*200)/(26))%100)/100)
-#endif
 
-extern void RBO_INT_Cooler              (void);
+extern void RBO_INT_WakeUp              (void);
 extern void PORTBINTCON_INT_Temp        (void);
 extern void TIMER0_ReadAdc100ms         (void);
 extern void TIMER1_1s                   (void);
 extern void TIMER2_100ms                (void);
+ 
 #endif	/* INTHANDLERS_H */
 
