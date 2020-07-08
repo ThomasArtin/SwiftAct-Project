@@ -13,7 +13,7 @@
 #include "heater.h"
 
 volatile Flag_16 Flags;
-volatile uint_8  SetTemp = 60;
+extern volatile uint_8  SetTemp = 60;
 volatile uint_16 ReadTemp = NULL;
 void Heater_Main(void)
 {   
@@ -96,9 +96,35 @@ void Heater_Main(void)
     {
         Flags.Timer2SoftTimer = 0;
         Flags.toggle  = ~Flags.toggle;
-       // if (Flags.HeaterOn == 1) DIO_SetPinValue(HeatingElementLed,Flags.toggle);
+        if (Flags.HeaterOn == 1) DIO_SetPinValue(HeatingElementLed,Flags.toggle);
     }
-    //if (Flags.CoolerOn == 1) DIO_SetPinValue(HeatingElementLed,HIGH);
+    if (Flags.CoolerOn == 1) DIO_SetPinValue(HeatingElementLed,HIGH);
+    /*if woke up retrieve SetTemp from eeprom and calculate it's crc if 
+     the data is corrupted retrieve the redundant SetTemp and calculate it's
+     crc if that is also courrupted set the SetTemp to the default value*/
+    if (Flags.WakeUp == 1)
+    {
+        Flags.WakeUp = 0;
+        uint_8 TempAndCRC[2];
+        EEPROM_Read(EEPROM_TempAndCRCLoc,TempAndCRC);
+        if (TempAndCRC[1] == EEPROM_GenCRC(TempAndCRC[0]))
+        {
+            SetTemp = TempAndCRC [0];
+        }
+        else
+        {
+            EEPROM_Read(EEPROM_TempAndCRCLocRed,TempAndCRC);
+            if (TempAndCRC[1] == EEPROM_GenCRC(TempAndCRC[0]))
+            {
+                SetTemp = TempAndCRC [0];
+            }
+            else
+            {
+                SetTemp = DefaultSetTemp;
+            }
+        }
+    }
+    
     
     Heater_FSM();
 }

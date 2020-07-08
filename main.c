@@ -35,9 +35,9 @@
 #include "INTHandlers.h"
 #include "heater.h"
 volatile Flag_16 Flags;
-
 void main()
 {   
+    I2C_init (100000);
     Temp_Init();
     Seg_Init();
     ADC_Init();

@@ -8,22 +8,22 @@
 #ifndef I2C_H
 #define	I2C_H
 
+#include "Typdefs.h"
+
+
 #define _XTAL_FREQ 20000000 
 
 /*define SDA and SCK pins*/
 #define I2c_SDA C4
 #define I2c_SCK C3
 
-extern void I2c_Init            (uint_32 freq);
-extern void I2c_wait            (void);
-extern void I2c_Begin           (void);
-extern void I2c_End             (void);
-extern void I2c_WB              (uint_8 data);
-extern uint_8 I2c_RB            (void);
-extern void I2c_Ack             (void);
-extern void I2c_NAck            (void);
-extern void I2c_WaitAck         (void);
-extern void I2c_RepeatedStart   (void);
+void I2C_init           (uint_32 clock);
+void I2C_wait           (void);
+void I2C_start          (void);
+void I2C_repeated_start (void);
+void I2C_stop           (void);
+void I2C_write          (uint_8 data);
+uint_8 I2C_read         (uint_8 ack);
 
 
 #endif	/* I2C_H */

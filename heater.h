@@ -27,7 +27,7 @@ typedef union
         unsigned Timer0Reset            :1;
         unsigned Timer1Reset            :1;
         unsigned Timer2Reset            :1;
-        unsigned b12    :1;
+        unsigned WakeUp                 :1;
         unsigned b13    :1;
         unsigned State  :3;
     };
@@ -51,8 +51,10 @@ extern volatile  Flag_16 Flags;
 #define Button_Inecrement   5
 #define Num_ADC_Samples     10
 #define Temp_MaxError       5
-
+#define DefaultSetTemp      60
+/***********************************/
 extern void Heater_Main(void);
 extern void Heater_FSM(void);
+/***********************************/
 #endif	/* HEATER_H */
 
