@@ -15,9 +15,9 @@
 
 extern void RBO_INT_WakeUp              (void);
 extern void PORTBINTCON_INT_Temp        (void);
-extern void TIMER0_ReadAdc100ms         (void);
+extern void TIMER0_Buttons              (void);
 extern void TIMER1_1s                   (void);
-extern void TIMER2_100ms                (void);
+extern void TIMER2_ADC                  (void);
  
 #endif	/* INTHANDLERS_H */
 

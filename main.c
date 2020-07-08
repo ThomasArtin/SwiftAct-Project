@@ -43,9 +43,9 @@ void main()
     Seg_Init();
     ADC_Init();
     INT_RB0_IntCallBack(RBO_INT_WakeUp);
-    INT_TIMER0_IntCallBack (TIMER0_ReadAdc100ms);
+    INT_TIMER0_IntCallBack (TIMER0_Buttons);
     INT_TIMER1_IntCallBack (TIMER1_1s);
-    INT_TIMER2_IntCallBack (TIMER2_100ms);
+    INT_TIMER2_IntCallBack (TIMER2_ADC);
     INT_int();
     while(1)
     {   bug_1 = Flags.Flag;

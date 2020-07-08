@@ -8,12 +8,11 @@
 #include "Temp.h"
 #include "heater.h"
 
-volatile uint_8 bug_5 = 0;
 volatile Flag_16 Flags;
 /*wake up MCU from Sleep*/
 void RBO_INT_WakeUp(void)
 {   
-    bug_5 ++ ;
+    __delay_ms(20);
     if (Flags.State == OFF_mode) 
     {
         Flags.State = ON_mode;
@@ -28,7 +27,7 @@ void PORTBINTCON_INT_Temp(void)
   
 
 }
-void TIMER0_ReadAdc100ms(void)
+void TIMER0_Buttons(void)
 {
     if (DIO_GetPinValue(Power_Button) == LOW)
     {
@@ -49,7 +48,7 @@ void TIMER1_1s(void)
  
 }
 
-void TIMER2_100ms(void)
+void TIMER2_ADC(void)
 {
-
+    Flags.Timer2Adc = 1; 
 }
