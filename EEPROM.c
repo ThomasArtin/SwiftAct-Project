@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include "Typdefs.h"
-volatile uint_8 bug = 0;
 //#include "I2C.h"
 #include "I2c.h"
 uint8_t EEPROM_Read(uint8_t address){
@@ -17,7 +16,6 @@ uint8_t EEPROM_Read(uint8_t address){
     I2c_WB(0b10100001);
     // data = I2C_Read_Byte();
     data = I2c_RB();
-    bug = data;
     // I2C_Nack();
     I2c_NAck();
     //I2C_Stop();

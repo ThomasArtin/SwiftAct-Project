@@ -16,17 +16,17 @@ typedef union
 {
     struct
     {
-        unsigned PowerPressed     :1;
-        unsigned UpPressed        :1;
-        unsigned DownPressed      :1;
-        unsigned Timer2Adc        :1;
-        unsigned b5     :1;
-        unsigned b6     :1;
-        unsigned b7     :1;
-        unsigned b8     :1;
-        unsigned b9     :1;
-        unsigned b10    :1;
-        unsigned b11    :1;
+        unsigned PowerPressed           :1;
+        unsigned UpPressed              :1;
+        unsigned DownPressed            :1;
+        unsigned Timer2Adc              :1;
+        unsigned Timer2SoftTimer        :1;
+        unsigned HeaterOn               :1;
+        unsigned CoolerOn               :1;
+        unsigned toggle                 :1;
+        unsigned Timer0Reset            :1;
+        unsigned Timer1Reset            :1;
+        unsigned Timer2Reset            :1;
         unsigned b12    :1;
         unsigned b13    :1;
         unsigned State  :3;
@@ -44,7 +44,7 @@ extern volatile  Flag_16 Flags;
 #define UP_Button          B2
 #define Down_Button        B1
 #define Power_Button       B0
-
+#define HeatingElementLed  B7
 /*************defines***************/
 #define Max_SetTemp         75
 #define Min_SetTemp         35

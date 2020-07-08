@@ -3,7 +3,9 @@
 #include "Typdefs.h"
 #include "DIO.h"
 #include "INT.h"
+#include "heater.h"
 
+/*******************************************/
 /*Global Variables*/
 #if (INT_RB0 == ON)
 callback RBO_INTHANDLER = NULL;
@@ -20,6 +22,7 @@ callback TIMER1_INTHANDLER  = NULL;
 #if (INT_TIMER2 == ON)
 callback TIMER2_INTHANDLER  = NULL;
 #endif
+/*******************************************/
 /*Initializes interrupt registers
  *you can configure what gets initialized
  in INT.h                               */
@@ -79,7 +82,7 @@ void INT_int (void)
     /*enables peripheral int*/
     INTCONbits.PEIE = 1;
 }
-
+/*******************************************/
 /*Set ISR handlers*/
 #if (INT_RB0 == ON)
 void INT_RB0_IntCallBack (callback RB0_INTHandlerPtr)
@@ -111,13 +114,14 @@ void INT_PORTBINTCON_IntCallBack (callback PORTBINTCON_INTHandlerPtr)
         TIMER2_INTHANDLER = TIMER2_INTHandlerPtr;
     }
 #endif
+    /*******************************************/
 /*Sets PORTB to be output and pull all the pins to a weak pull-up*/
 void INT_PullUpPORTB(void)
 {
-    DIO_SetPortDirection(DIOPORTB,0xFF);
+    DIO_SetPortDirection(DIOPORTB,0x7F);
     OPTION_REGbits.nRBPU = 0;
 }
-
+/*******************************************/
 void __interrupt() ISR(void)
 {   
    /*RB0 INT*/
@@ -135,10 +139,18 @@ void __interrupt() ISR(void)
         INTCONbits.RBIF = 0;
     }
 #endif
+
+
 #if (INT_TIMER0 == ON)
+    
     if (INTCONbits.T0IF == 1)
-    {   
+    {    
         static uint_8 overflow_count_0 = 0;
+        if (Flags.Timer0Reset == 1)
+        {
+            Flags.Timer0Reset = 0;
+            overflow_count_0 = 0;
+        }
         if (overflow_count_0 == TIMER0_OverFlowCounts+1)
         {
             overflow_count_0 = 0;
@@ -154,7 +166,12 @@ void __interrupt() ISR(void)
     if (PIR1bits.TMR1IF == 1)
     {
     static uint_8 overflow_count_1 = 0;
-    if (overflow_count_1 == 10)
+    if (Flags.Timer1Reset == 1)
+    {
+        Flags.Timer1Reset = 0;
+        overflow_count_1 = 0;
+    }
+    if (overflow_count_1 == 48)
     {
         overflow_count_1 = 0;
         (*TIMER1_INTHANDLER)();
@@ -170,6 +187,11 @@ void __interrupt() ISR(void)
     if (PIR1bits.TMR2IF == 1)
     {   
     static uint_8 overflow_count_2 = 0;
+    if (Flags.Timer2Reset == 1)
+    {
+        Flags.Timer2Reset = 0;
+        overflow_count_2 = 0;
+    }
     if (overflow_count_2 == TIMER2_OverFlowCounts+1)
     {
         overflow_count_2 = 0;
@@ -198,6 +220,7 @@ void INT_TIMER0_OFF(void)
 {
     /*timer0 int disable*/
     INTCONbits.TMR0IE = 0;
+    Flags.Timer0Reset = 1;
 }
 #endif
 #if (INT_TIMER1 == ON)
@@ -223,6 +246,7 @@ void INT_TIMER1_OFF(void)
 {
     /*turn timer off*/
     T1CONbits.TMR1ON = 0;
+    Flags.Timer1Reset = 1;
 }
 #endif
 #if (INT_TIMER2 == ON)
@@ -240,5 +264,6 @@ void INT_TIMER2_OFF(void)
 {
     /*turn timer 2 off*/
     T2CONbits.TMR2ON = 0;
+    Flags.Timer2Reset = 1;
 }
 #endif

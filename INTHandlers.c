@@ -43,12 +43,20 @@ void TIMER0_Buttons(void)
     }
    
 }
-void TIMER1_1s(void)
+void TIMER1_TempSettingModeExit(void)
 {
- 
+    if (Flags.State == Temp_setting_mode) Flags.State = ON_mode;
 }
 
 void TIMER2_ADC(void)
-{
+{   
+    static uint_8 timer2_count = 0;
+    timer2_count ++ ;
+    if (timer2_count == Timer2_SoftTimerCount)
+    {
+        timer2_count = 0;
+        Flags.Timer2SoftTimer = 1;
+        
+    }
     Flags.Timer2Adc = 1; 
 }

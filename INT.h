@@ -35,7 +35,7 @@ typedef void(*callback)(void);
 /*******************************************/
 #define INT_TIMER1              ON
 #define INT_TIMER1_Prescaler    8
-#define INT_TIMER1_Freq         1000 // in ms
+#define INT_TIMER1_Freq         5000 // in ms
 /*******************************************/
 #define INT_TIMER2              ON
 #define INT_TIMER2_Prescaler    16
@@ -54,7 +54,7 @@ typedef void(*callback)(void);
 #define TIMER2_OverFlowCounts       (((INT_TIMER2_Freq*2)/(26)))
 #define TIMER2_Preload              (256 * (((INT_TIMER2_Freq*200)/(26))%100)/100)
 #endif
-
+/*******************************************/
 extern void INT_int                         (void);
 extern void INT_PullUpPORTB                 (void);
 extern void INT_RB0_IntCallBack             (callback RB0_INTHandlerPtr);

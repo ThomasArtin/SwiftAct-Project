@@ -34,7 +34,6 @@
 #include "INT.h"
 #include "INTHandlers.h"
 #include "heater.h"
-volatile uint_16 bug_1 = 0;
 volatile Flag_16 Flags;
 
 void main()
@@ -44,11 +43,11 @@ void main()
     ADC_Init();
     INT_RB0_IntCallBack(RBO_INT_WakeUp);
     INT_TIMER0_IntCallBack (TIMER0_Buttons);
-    INT_TIMER1_IntCallBack (TIMER1_1s);
+    INT_TIMER1_IntCallBack (TIMER1_TempSettingModeExit);
     INT_TIMER2_IntCallBack (TIMER2_ADC);
     INT_int();
     while(1)
-    {   bug_1 = Flags.Flag;
+    {   
         Heater_Main();
     } 
 } 
