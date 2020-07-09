@@ -35,23 +35,23 @@ typedef union
 }Flag_16;
 extern volatile  Flag_16 Flags;
 /***********************************/
-/**************States**************/
-#define OFF_mode             0
-#define ON_mode              1
-#define Temp_setting_mode    2
+/**************States***************/
+#define OFF_mode                0
+#define ON_mode                 1
+#define Temp_setting_mode       2
 /***********************************/
 /***********mapping*****************/
-#define UP_Button          B2
-#define Down_Button        B1
-#define Power_Button       B0
-#define HeatingElementLed  B7
+#define UP_Button               B2
+#define Down_Button             B1
+#define Power_Button            B0
+#define HeatingElementLed       B7
 /*************defines***************/
-#define Max_SetTemp         75
-#define Min_SetTemp         35
-#define Button_Inecrement   5
-#define Num_ADC_Samples     10
-#define Temp_MaxError       5
-#define DefaultSetTemp      60
+#define Max_SetTemp             75
+#define Min_SetTemp             35
+#define Button_Inecrement       5
+#define Num_ADC_Samples         10
+#define Temp_MaxError           5
+#define DefaultSetTemp          60
 /***********************************/
 extern void Heater_Main(void);
 extern void Heater_FSM(void);

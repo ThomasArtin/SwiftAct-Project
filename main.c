@@ -37,17 +37,24 @@
 volatile Flag_16 Flags;
 void main()
 {   
+    /*Initialize I2C for 100KHZ*/
     I2C_init (100000);
+    /*Initialize Temperature controlling driver*/
     Temp_Init();
+    /*Initialize 7 segment displays*/
     Seg_Init();
+    /*Initialize ADc peripheral*/
     ADC_Init();
-    INT_RB0_IntCallBack(RBO_INT_WakeUp);
+    /*Sets the Interrupt CallBack functions
+     * (these functions are found in INTHandlers.c)*/
+    INT_RB0_IntCallBack    (RBO_INT_WakeUp);
     INT_TIMER0_IntCallBack (TIMER0_Buttons);
     INT_TIMER1_IntCallBack (TIMER1_TempSettingModeExit);
     INT_TIMER2_IntCallBack (TIMER2_ADC);
+    /*Initialize interrupts*/
     INT_int();
     while(1)
-    {   
+    {   /*Main loop */
         Heater_Main();
     } 
 } 
